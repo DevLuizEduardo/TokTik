@@ -1,32 +1,55 @@
-public class Usuario {
-    private String nome;
-    private String email;
+import java.io.*;
+import java.util.ArrayList;
+
+public class Usuario implements Serializable {
+    private String login;
     private String senha;
     private Perfil perfil;
 
 
-    public void criarPublicacao(String titulo,String tipo,String legenda){
+    public Usuario() {
+    }
+
+
+
+    public void criarPublicacao(String texto){
+        File lista = new File("Postagens");
+        lista.mkdir();
+        File [] qtd = lista.listFiles();
+        int i = qtd.length;
+        File arquivo = new File("Postagens",i+".txt");
+        try (FileWriter novo = new FileWriter(arquivo)){
+            novo.write(texto);
+            novo.flush();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
 
     }
 
     public void buscarPerfil(String nickName){
 
+
+
     }
 
-    public String getNome() {
-        return nome;
+    private void chaves(){
+
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+
+    public String getLogin() {
+        return login;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getSenha() {
@@ -44,9 +67,4 @@ public class Usuario {
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
     }
-
-
-
-
-
 }

@@ -1,29 +1,11 @@
 public class Publicacao {
-    private String titulo;
-    private String formatoPublicacao;
-    private String legenda;
+    private String texto;
 
-    public String getTitulo() {
-        return titulo;
+    public String getTexto() {
+        return texto;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public String getFormatoPublicacao() {
-        return formatoPublicacao;
-    }
-
-    public void setFormatoPublicacao(String formatoPublicacao) {
-        this.formatoPublicacao = formatoPublicacao;
-    }
-
-    public String getLegenda() {
-        return legenda;
-    }
-
-    public void setLegenda(String legenda) {
-        this.legenda = legenda;
+    public void setTexto(String texto) {
+        this.texto = texto;
     }
 }

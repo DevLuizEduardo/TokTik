@@ -18,72 +18,75 @@ public class Toktik {
             System.out.println("\nPara acessar sua conta se ja tiver cadastro digite (1)");
             System.out.println("Para Cadastrar uma conta digite (2)");
             System.out.println("Para Sair digite (0)");
-            String op = ler.nextLine();
+            int op = ler.nextInt();
 
 
             switch (op) {
 
-                case "1": {
+                case 1: {
                     System.out.println("\n-----Bem vindo a Tela de Login-----\n");
-                    do{
-                        System.out.println("Digite um Login");
-                        String login = ler.nextLine();
-                        System.out.println("Digite uma senha");
-                        String senha = ler.nextLine();
-                      usuarioLogado = acessoPrincipal.loginUsuario(login,senha);
-                    }while (usuarioLogado == null);
-                    acesso = true;
+                    usuarioLogado =acessoPrincipal.loginUsuario();
+
+
+                    if(usuarioLogado !=null){
+                        acesso = true;
+
+                    }else {
+                        System.out.println("Usuario ou Senha Incorreto!!!");
+                    }
                     break;
 
                 }
-                case "2": {
+                case 2: {
                     boolean cadastro ;
                     System.out.println("\n-----Bem vindo a Tela de Cadastro-----\n");
-                    do{
-                    System.out.println("Digite um Login");
-                    String login = ler.nextLine();
-                    System.out.println("Digite uma senha");
-                    String senha = ler.nextLine();
-                   cadastro= acessoPrincipal.cadastrarUsuario(login,senha);
 
-                    }while (cadastro == false);
-                    System.out.println("Cadastro Realizado com sucesso!!!");
+                  acessoPrincipal.cadastrarUsuario();
 
                     break;
 
                 }
-                case "0": {
+                case 0: {
                     systemOn = false;
                     break;
                 }
             }
 
-            while (acesso == true){
+            while (acesso ){
 
                 System.out.println("------Bem vindo a Tela Principal do Toktik--------");
                 System.out.println("Para Buscar uma Postagem digite (1)");
                 System.out.println("Para Criar uma Publicaco digite (2)");
                 System.out.println("Para Logout digite (0)");
-                op = ler.nextLine();
+                op = ler.nextInt();
 
                 switch (op){
 
-                    case "1":{
+                    case 1:{
+                        break;
 
                     }
-                    case "2":{
+                    case 2:{
                         System.out.println("----Tela de Pulicacao----\n");
-                        System.out.print("Digite o Titulo :");
-                        String titulo = ler.nextLine();
-                        System.out.print("\n Digite o Formato da Publicao :");
-                        String formato = ler.nextLine();
-                        System.out.println("\n Digite a Legenda da Publicao");
-                        String legenda = ler.nextLine();
-                        usuarioLogado.criarPublicacao(titulo,formato,legenda);
+                        System.out.print("Digite sua publicacao\n\n");
+                        String post = ler.nextLine();
+                        System.out.println("Publicar Sim(1) | Nao (2)");
+                        int resposta = ler.nextInt();
+
+                        if (resposta == 1){
+                            usuarioLogado.criarPublicacao(post);
+                            System.out.println("Seu texto foi publicado com sucesso!!!");
+                            break;
+                        }else{
+                            System.out.println("Seu texto não foi publicado!!!");
+                            break;
+                        }
+
+
 
 
                     }
-                    case "0":{
+                    case 0:{
                         acesso = false;
                         break;
                     }
@@ -94,7 +97,7 @@ public class Toktik {
 
 
 
-        }while (systemOn == true);
+        }while (systemOn );
 
     }
 }
