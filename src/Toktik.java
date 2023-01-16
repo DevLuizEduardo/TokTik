@@ -10,6 +10,7 @@ public class Toktik {
         AcessoPrincipal acessoPrincipal = new AcessoPrincipal();
         Scanner ler = new Scanner(System.in);
 
+
         boolean systemOn = true;
         boolean acesso = false;
 
@@ -18,12 +19,12 @@ public class Toktik {
             System.out.println("\nPara acessar sua conta se ja tiver cadastro digite (1)");
             System.out.println("Para Cadastrar uma conta digite (2)");
             System.out.println("Para Sair digite (0)");
-            int op = ler.nextInt();
+            String op = ler.nextLine();
 
 
             switch (op) {
 
-                case 1: {
+                case "1": {
                     System.out.println("\n-----Bem vindo a Tela de Login-----\n");
                     usuarioLogado =acessoPrincipal.loginUsuario();
 
@@ -37,7 +38,7 @@ public class Toktik {
                     break;
 
                 }
-                case 2: {
+                case "2": {
                     boolean cadastro ;
                     System.out.println("\n-----Bem vindo a Tela de Cadastro-----\n");
 
@@ -46,7 +47,7 @@ public class Toktik {
                     break;
 
                 }
-                case 0: {
+                case "0": {
                     systemOn = false;
                     break;
                 }
@@ -58,15 +59,15 @@ public class Toktik {
                 System.out.println("Para Buscar uma Postagem digite (1)");
                 System.out.println("Para Criar uma Publicaco digite (2)");
                 System.out.println("Para Logout digite (0)");
-                op = ler.nextInt();
+                op = ler.nextLine();
 
                 switch (op){
 
-                    case 1:{
+                    case "1":{
                         break;
 
                     }
-                    case 2:{
+                    case "2":{
                         System.out.println("----Tela de Pulicacao----\n");
                         System.out.print("Digite sua publicacao\n\n");
                         String post = ler.nextLine();
@@ -86,7 +87,7 @@ public class Toktik {
 
 
                     }
-                    case 0:{
+                    case "0":{
                         acesso = false;
                         break;
                     }
