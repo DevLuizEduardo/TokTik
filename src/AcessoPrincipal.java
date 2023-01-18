@@ -1,9 +1,6 @@
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class AcessoPrincipal {
@@ -13,18 +10,22 @@ public class AcessoPrincipal {
     private ArrayList<Usuario>usuarios = new ArrayList<>();
 
 
-    public void cadastrarUsuario(){
+
+    public Usuario cadastrarUsuario(){
         Usuario usuario = new Usuario();
         System.out.println("Digite um Login");
         usuario.setLogin(ler.nextLine());
         System.out.println("Digite uma senha");
         usuario.setSenha(ler.nextLine());
 
- if(buscarLogin(usuario) !=null){
+ if(buscarLogin(usuario)){
      System.out.println("Login ja existe, tente novamente!!!");
+     return null;
  }else {
      salvarLogin(usuario);
      System.out.println("Cadastro Realizado com sucesso!!!");
+     usuario.carregarArquivos();
+     return usuario;
  }
     }
 
@@ -32,39 +33,19 @@ public class AcessoPrincipal {
 
 
     public Usuario loginUsuario(){
-
         Usuario usuario = new Usuario();
         System.out.println("Digite um Login");
          usuario.setLogin(ler.nextLine());
         System.out.println("Digite uma senha");
         usuario.setSenha(ler.nextLine());
 
+        if(buscarLogin(usuario)){
+            usuario.carregarArquivos();
+            return usuario;
+        }else {
+            return null;
+        }
 
-        Path path = Paths.get("Logins/"+usuario.getLogin()+".bin");
-
-
-       if (Files.exists(path) ) {//verifica se o arquivo de login existe, se não,retorna nulo
-
-           try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(path))) {
-
-               Usuario inUsuario = (Usuario) ois.readObject();
-
-               if (inUsuario.getSenha().equals(usuario.getSenha())) {// verifica se a senha
-                   return inUsuario;
-               } else {
-                   return null;
-               }
-
-           } catch (IOException | ClassNotFoundException e) {
-
-               e.printStackTrace();
-
-           }
-
-
-       }
-
-       return null;
     }
 
 
@@ -72,11 +53,17 @@ public class AcessoPrincipal {
 
 
         File diretorio = new File("Logins");
-        diretorio.mkdir();
-        Path path = Paths.get("Logins/"+usuario.getLogin()+".bin");
+        if(!diretorio.exists()) {
+            diretorio.mkdir();
+        }
+        File file = new File(diretorio,"Usuarios.txt");
+        try(FileWriter arquivo = new FileWriter(file,true);
+            BufferedWriter buf = new BufferedWriter(arquivo);
+            PrintWriter salvar = new PrintWriter(buf)){
+            salvar.println(usuario.toString());
+            salvar.flush();
 
-        try (ObjectOutputStream oss = new ObjectOutputStream(Files.newOutputStream(path))){
-            oss.writeObject(usuario);
+
 
         }catch (IOException e){
             e.printStackTrace();
@@ -84,25 +71,54 @@ public class AcessoPrincipal {
         }
     }
 
-    private Usuario buscarLogin(Usuario usuario){
+    private boolean buscarLogin(Usuario usuario){
+        Collections.sort(this.usuarios);
 
+        int pos = Collections.binarySearch(this.usuarios,usuario);
 
-        Path path = Paths.get("Logins/"+usuario.getLogin()+".bin");
-
-        try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(path))){
-
-            Usuario inUsuario = (Usuario) ois.readObject();
-            ois.close();
-
-            return inUsuario;
-
-        }catch (IOException  | ClassNotFoundException e ){
-
-            return null;
-
+        if (pos>=0){
+            return this.usuarios.get(pos).getSenha().equals(usuario.getSenha());
+        }else {
+            return false;
         }
 
+
+
     }
+
+    public void carregarLogins(){
+
+        File file = new File("Logins");
+        File arquivo = new File(file,"Usuarios.txt");
+        if(!arquivo.exists()){
+            file.mkdir();
+        }else{
+
+            try(FileReader fr = new FileReader(arquivo);
+                BufferedReader br = new BufferedReader(fr)){
+                String linha = br.readLine();
+                while (true) {
+
+                    if (linha != null) {
+
+                        String []dado = linha.split(",");
+                        this.usuarios.add(new Usuario(dado[0],dado[1]));
+                    }else {
+                        break;
+
+                    }
+                    linha = br.readLine();
+                }
+
+
+            }catch ( IOException e){
+                e.printStackTrace();
+
+            }
+        }
+    }
+
+
     public void buscarPublicacao(String busca){
 
     }

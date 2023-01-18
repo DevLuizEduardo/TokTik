@@ -69,4 +69,16 @@ public class Perfil {
     public void setSeguidores(ArrayList<Usuario> seguidores) {
         Seguidores = seguidores;
     }
+
+    @Override
+    public String toString() {
+        return "Perfil{" +
+                "qtdSeguidores=" + qtdSeguidores +
+                ", qtdSeguindo=" + qtdSeguindo +
+                ", qtdPublicacao=" + qtdPublicacao +
+                ", publicacaos=" + publicacaos +
+                ", Seguindo=" + Seguindo +
+                ", Seguidores=" + Seguidores +
+                '}';
+    }
 }

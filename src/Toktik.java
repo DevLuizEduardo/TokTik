@@ -8,6 +8,7 @@ public class Toktik {
          Usuario usuarioLogado = new Usuario();
          Usuario usuarioAux;
         AcessoPrincipal acessoPrincipal = new AcessoPrincipal();
+        acessoPrincipal.carregarLogins();//Carrega todos logins já cadastrados
         Scanner ler = new Scanner(System.in);
 
 
@@ -16,9 +17,9 @@ public class Toktik {
 
         do {
             System.out.println("-------Bem vindo ao TokTik------\n" + "A rede social mais acessada do Brasil");
-            System.out.println("\nPara acessar sua conta se ja tiver cadastro digite (1)");
-            System.out.println("Para Cadastrar uma conta digite (2)");
-            System.out.println("Para Sair digite (0)");
+            System.out.println("\nLogin (1)");
+            System.out.println("Cadastrar (2)");
+            System.out.println("Sair (0)");
             String op = ler.nextLine();
 
 
@@ -42,8 +43,12 @@ public class Toktik {
                     boolean cadastro ;
                     System.out.println("\n-----Bem vindo a Tela de Cadastro-----\n");
 
-                  acessoPrincipal.cadastrarUsuario();
+                    usuarioLogado=acessoPrincipal.cadastrarUsuario();
 
+                    if(usuarioLogado !=null){
+                        acesso = true;
+
+                    }
                     break;
 
                 }
@@ -64,6 +69,9 @@ public class Toktik {
                 switch (op){
 
                     case "1":{
+                        System.out.println("Digite Pesquisa");
+                        String texto = ler.nextLine();
+                        usuarioLogado.bucarPost(texto);
                         break;
 
                     }
