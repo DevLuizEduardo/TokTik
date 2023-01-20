@@ -6,9 +6,7 @@ public class Toktik {
 
     public static void main(String[] args) {
          Usuario usuarioLogado = new Usuario();
-         Usuario usuarioAux;
         AcessoPrincipal acessoPrincipal = new AcessoPrincipal();
-        acessoPrincipal.carregarLogins();//Carrega todos logins já cadastrados
         Scanner ler = new Scanner(System.in);
 
 
@@ -16,6 +14,7 @@ public class Toktik {
         boolean acesso = false;
 
         do {
+            System.out.println("============================================================================");
             System.out.println("-------Bem vindo ao TokTik------\n" + "A rede social mais acessada do Brasil");
             System.out.println("\nLogin (1)");
             System.out.println("Cadastrar (2)");
@@ -60,6 +59,7 @@ public class Toktik {
 
             while (acesso ){
 
+                System.out.println("===================================================");
                 System.out.println("------Bem vindo a Tela Principal do Toktik--------");
                 System.out.println("Para Buscar uma Postagem digite (1)");
                 System.out.println("Para Criar uma Publicaco digite (2)");
@@ -69,13 +69,14 @@ public class Toktik {
                 switch (op){
 
                     case "1":{
-                        System.out.println("Digite Pesquisa");
+                        System.out.println("Digite sua Pesquisa");
                         String texto = ler.nextLine();
-                        usuarioLogado.bucarPost(texto);
+                        usuarioLogado.buscarEndereco(texto);
                         break;
 
                     }
                     case "2":{
+
                         System.out.println("----Tela de Pulicacao----\n");
                         System.out.print("Digite sua publicacao\n\n");
                         String post = ler.nextLine();
@@ -83,7 +84,7 @@ public class Toktik {
                         int resposta = ler.nextInt();
 
                         if (resposta == 1){
-                            usuarioLogado.criarPublicacao(post);
+                            usuarioLogado.salvarPostagem(post);
                             System.out.println("Seu texto foi publicado com sucesso!!!");
                             break;
                         }else{

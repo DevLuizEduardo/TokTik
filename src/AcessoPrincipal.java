@@ -7,6 +7,10 @@ public class AcessoPrincipal {
 
     Scanner ler = new Scanner(System.in);
 
+    public AcessoPrincipal() {
+        carregarLogins();
+    }
+
     private ArrayList<Usuario>usuarios = new ArrayList<>();
 
 
